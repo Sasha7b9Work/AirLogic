@@ -1,13 +1,3 @@
-## Сборка проекта mftech-f405
-
-11. Произвести сборку проекта mftech-f405
-    ``` bash
-    cd  ~/airlogic/src2/mftech-f405
-    pio run
-    ```
-
-    ![mftech-f405-build-sucess](imgs/mftech-f405_build.jpg)
-
 ## Сборка mf_lcd
 
 Все предыдущие шаги и:
