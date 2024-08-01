@@ -11,3 +11,5 @@
 
 # Копируем собственную реализацию [Arduino_Core_STM32](https://github.com/stm32duino/Arduino_Core_STM32) (коммит fe500808f773c00f537ba3242ed18e0bdc5008f9)
 cp -r ~/airlogic/src/framework-ststm32 ~/.platformio/packages/
+
+cp ~/airlogic/new_files/platforms/ststm32/platform.json ~/.platformio/platforms/ststm32

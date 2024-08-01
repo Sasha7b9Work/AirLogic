@@ -1,24 +1,5 @@
 ## Сборка проекта mftech-f405
 
-5. Добавить в файл `~/.platformio/platforms/ststm32/platform.json` конфигурацию для использования нашего фреймворка для сборки проекта
-    * В секцию `frameworks`:
-      ``` json
-      "stm32": {
-        "package": "framework-ststm32",
-        "script": "builder/frameworks/stm32.py"
-      }
-      ```
-
-    * В секцию `packages`:
-      ``` json
-      "framework-ststm32": {
-        "type": "framework",
-        "optional": true,
-        "version": "0.0.0"
-      }
-      ```
-    ![platform.json](imgs/edited_platform.json.jpg)
-
 11. Произвести сборку проекта mftech-f405
     ``` bash
     cd  ~/airlogic/src2/mftech-f405

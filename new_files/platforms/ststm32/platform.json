@@ -67,9 +67,18 @@
       "description": "The Zephyr Project is a scalable real-time operating system (RTOS) supporting multiple hardware architectures, optimized for resource constrained devices, and built with safety and security in mind",
       "homepage": "https://www.zephyrproject.org",
       "title": "Zephyr RTOS"
+    },
+    "stm32": {
+      "package": "framework-ststm32",
+      "script": "builder/frameworks/stm32.py"
     }
   },
-  "packages": {
+  "packages":  {
+    "framework-ststm32": {
+      "type": "framework",
+      "optional": true,
+      "version": "0.0.0"
+    },
     "toolchain-gccarmnoneeabi": {
       "type": "toolchain",
       "owner": "platformio",
