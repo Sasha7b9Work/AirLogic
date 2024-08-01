@@ -14,13 +14,3 @@ cp -r ~/airlogic/src/framework-ststm32 ~/.platformio/packages/
 
 cp ~/airlogic/new_files/platforms/ststm32/platform.json ~/.platformio/platforms/ststm32
 cp ~/airlogic/new_files/platforms/ststm32/builder/frameworks/stm32.py ~/.platformio/platforms/ststm32/builder/frameworks
-
-cd ~/airlogic/src2/mftech-f405
-pio run
-
-cd ~/airlogic/src2/mf_lcd
-pio run
-
-
-cd ~/airlogic
-
