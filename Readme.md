@@ -1,15 +1,5 @@
 ## Сборка проекта mftech-f405
 
-3. Устанавливаем компоненты [Platformio](https://platformio.org/)
-    ``` bash
-    pio pkg install -g --platform "platformio/ststm32@^15.4.1"
-    ```
-
-4. Копируем собственную реализацию [Arduino_Core_STM32](https://github.com/stm32duino/Arduino_Core_STM32) (коммит fe500808f773c00f537ba3242ed18e0bdc5008f9)
-    ``` bash
-    cp -r ~/airlogic/src/framework-ststm32 ~/.platformio/packages/
-    ```
-
 5. Добавить в файл `~/.platformio/platforms/ststm32/platform.json` конфигурацию для использования нашего фреймворка для сборки проекта
     * В секцию `frameworks`:
       ``` json
@@ -28,42 +18,6 @@
       }
       ```
     ![platform.json](imgs/edited_platform.json.jpg)
-
-6. Добавляем сборочный скрипт для сборки через наш фреймворк
-    ``` bash
-    cp ~/.platformio/packages/framework-ststm32/tools/platformio-build.py ~/.platformio/platforms/ststm32/builder/frameworks/stm32.py
-    ```
-
-7. Добавляем конфигурацию для плат в проект
-    ``` bash 
-    mkdir ~/airlogic/src2/mftech-f405/boards 
-    cp ~/airlogic/src/mftech_alpro10.json ~/airlogic/src2/mftech-f405/boards
-    ```
-
-
-8. Отредактировать файл фреймворка `~/.platformio/packages/framework-ststm32/package.json` следующим образом:
-    ``` json
-    {
-        "name": "framework-ststm32",
-        "description": "Wiring-based Framework (STM32 Core)",
-        "version": "0.0.0"
-    }
-    ```
-
-9. Отредактировать файл `~/airlogic/src2/mftech-f405/platformio.ini` конфигурации сборки проекта mftech-f405 следующим образом:
-    ``` ini
-    platform_packages =
-        toolchain-gccarmnoneeabi@1.90201.191206
-        framework-ststm32@0.0.0
-    ```
-
-10. Исправление ошибок проекта:
-    * В файле `~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/PeripheralPins.c` заменить Arduino.h на sketch.h
-    * В файле `~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/variant.cpp` заменить pins_arduino.h на pins_stm.h
-    * Скопировать недостающую библиотеку `cp -r ~/airlogic/src2/flasher/lib/CircularBuffer ~/airlogic/src2/mftech-f405/lib/`
-    * В файле `~/airlogic/src2/mftech-f405/lib/mfproto/mfmeasure.h` заменить `SpdTIM.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin, 0xF);` на `SpdTIM.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin);`
-    * В файле `~/airlogic/src2/mftech-f405/src/main.cpp` на строке 1408 закомментировать `,`
-    * Удалить дублирующие файлы `rm -rf ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/rtc.c ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/low_power.c`
 
 11. Произвести сборку проекта mftech-f405
     ``` bash

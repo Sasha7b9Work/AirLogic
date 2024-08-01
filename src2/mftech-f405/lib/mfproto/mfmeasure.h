@@ -33,7 +33,7 @@ void __attribute__((optimize("O3"))) resetCallback(void) {
 }
 
 void initMeasurement() {
-  SpdTIM.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin, 0xF);
+  SpdTIM.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin);
   uint32_t PrescalerFactor = 10;
   SpdTIM.setPrescaleFactor(PrescalerFactor);
   SpdTIM.setOverflow(0x10000);

@@ -1405,7 +1405,7 @@ void setupTask(void *arg) {
       LEDUP.setPhase(600);
       EN12V.on();
       EN5V.on();
- ,                                                                                                            vc                                              c,z      PROG.on();
+// ,                                                                                                            vc                                              c,z      PROG.on();
       /* init slaves */
       uint32_t timer;
       resetTimer(timer);
