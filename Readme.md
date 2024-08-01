@@ -1,24 +1,3 @@
-## Сборка mf_lcd
-
-Все предыдущие шаги и:
-
-1. Добавляем конфигурацию для плат в проект
-    ``` bash 
-    mkdir ~/airlogic/src2/mf_lcd/boards 
-    cp ~/airlogic/src/mftech_alpro10_lcd.json ~/airlogic/src2/mf_lcd/boards
-    ``` 
-2. Отредактировать файл `~/airlogic/src2/mf_lcd/platformio.ini` конфигурации сборки проекта mf_lcd следующим образом:
-    ``` ini
-    platform_packages =
-        toolchain-gccarmnoneeabi@1.90201.191206
-        framework-ststm32@0.0.0
-    ```
-
-3. Исправление ошибок проекта:
-    * Заменить `~/.platformio/packages/framework-ststm32/variants/MFTECH_LCD/PeripheralPins.c` заменить Arduino.h на sketch.h
-    * Заменить `~/.platformio/packages/framework-ststm32/variants/MFTECH_LCD/variant.cpp` заменить pins_arduino.h на pins_stm.h
-    * Скопировать недостающую библиотеку `cp -r ~/airlogic/src2/flasher/lib/CircularBuffer ~/airlogic/src2/mf_lcd/lib/`
-
 ## Сборка button
 
 Все предыдущие шаги и:
