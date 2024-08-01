@@ -16,4 +16,7 @@ pio run
 cd ~/airlogic/src2/bootloader_f051
 pio run
 
+cd ~/airlogic/src2/flasher
+pio run
+
 cd ~/airlogic
