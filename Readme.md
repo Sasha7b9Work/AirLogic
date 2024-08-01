@@ -1,23 +1,4 @@
-# AirLogic
-
 ## Сборка проекта mftech-f405
-
-`Сборка проверялась на Ubuntu 20.04.2 live server amd64`
-
-1. Устанавливаем [Platformio](https://platformio.org/) сборочную среду
-    ``` bash
-    sudo mkdir -p /usr/local/bin
-    sudo ln -s ~/.platformio/penv/bin/platformio /usr/local/bin/platformio
-    sudo ln -s ~/.platformio/penv/bin/pio /usr/local/bin/pio
-    sudo ln -s ~/.platformio/penv/bin/piodebuggdb /usr/local/bin/piodebuggdb
-    ```
-
-2. Клонируем данный репозиторий
-    ``` bash
-    cd ~
-    git clone --depth 1 https://gitlab.com/mftech1/airlogic 
-    cd airlogic
-    ```
 
 3. Устанавливаем компоненты [Platformio](https://platformio.org/)
     ``` bash

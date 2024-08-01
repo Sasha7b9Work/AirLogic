@@ -6,3 +6,5 @@ sudo ln -s ~/.platformio/penv/bin/platformio /usr/local/bin/platformio
 sudo ln -s ~/.platformio/penv/bin/pio /usr/local/bin/pio
 sudo ln -s ~/.platformio/penv/bin/piodebuggdb /usr/local/bin/piodebuggdb
 
+# Устанавливаем компоненты [Platformio](https://platformio.org/)
+pio pkg install -g --platform "platformio/ststm32@^15.4.1"
