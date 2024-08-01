@@ -1,0 +1,45 @@
+{
+  "build": {
+    "core": "stm32",
+    "cpu": "cortex-m4",
+    "extra_flags": "-DSTM32F407xx",
+    "f_cpu": "168000000L",
+    "framework_extra_flags": {
+      "arduino": ""
+    },
+    "mcu": "stm32f407vgt6",
+    "variant": "MFTECH_ALPRO"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "jlink_device": "STM32F407VG",
+    "openocd_target": "stm32f4x",
+    "svd_path": "STM32F40x.svd"
+  },
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "stm32"
+  ],
+  "name": "MFTech ALPRO 10",
+  "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 1048576,
+    "protocol": "stlink",
+    "protocols": [
+      "jlink",
+      "stlink",
+      "blackmagic",
+      "serial",
+      "dfu_reset"
+    ],
+    "require_upload_port": false,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": false
+  },
+  "url": "https://www.st.com/en/microcontrollers/stm32f405vg.html",
+  "vendor": "ST"
+}

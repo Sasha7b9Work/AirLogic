@@ -1,0 +1,7 @@
+{
+    "description": "GNU Arm Embedded GCC",
+    "name": "toolchain-gccarmnoneeabi",
+    "system": "linux_x86_64",
+    "url": "https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack",
+    "version": "1.90201.191206"
+}

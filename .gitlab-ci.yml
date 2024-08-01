@@ -1,0 +1,142 @@
+stages:
+  - build
+
+.prepare_machine:
+  stage: build
+  tags:
+    - docker
+  image: ubuntu:20.04
+  before_script:
+    - apt update
+    - apt -y install python3 curl python3-venv python3-dev g++
+    - python3 -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    - mkdir -p /usr/local/bin
+    - ln -s ~/.platformio/penv/bin/platformio /usr/local/bin/platformio
+    - ln -s ~/.platformio/penv/bin/pio /usr/local/bin/pio
+    - ln -s ~/.platformio/penv/bin/piodebuggdb /usr/local/bin/piodebuggdb
+    - pio pkg install -g --platform "platformio/ststm32@^15.4.1"
+    - cp -r ./src/framework-ststm32 ~/.platformio/packages/
+    - python3 tools/addframeworksconfigs.py
+    - cp ~/.platformio/packages/framework-ststm32/tools/platformio-build.py ~/.platformio/platforms/ststm32/builder/frameworks/stm32.py
+    - python3 tools/fixpackageconfig.py
+    - rm -rf ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/rtc.c ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/low_power.c
+
+Build mftech-f405:
+  extends: .prepare_machine
+  script:
+    - mkdir ./src2/mftech-f405/boards 
+    - cp ./src/mftech_alpro10.json ./src2/mftech-f405/boards
+    - python3 tools/fixplatformioini.py "./src2/mftech-f405/platformio.ini" "env:MFTech_ALPro"
+    - sed -i 's/Arduino\.h/sketch\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/PeripheralPins.c
+    - sed -i 's/pins_arduino\.h/pins_stm\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/variant.cpp
+    - cp -r ./src2/flasher/lib/CircularBuffer ./src2/mftech-f405/lib/
+    - sed -i 's/SpdTIM\.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin, 0xF);/SpdTIM\.setMode(channel, TIMER_INPUT_CAPTURE_FALLING, pin);/g' ./src2/mftech-f405/lib/mfproto/mfmeasure.h
+    - sed -i '1408s/.*/\/\//' ./src2/mftech-f405/src/main.cpp
+    - rm -rf ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/rtc.c ~/.platformio/packages/framework-ststm32/libraries/SrcWrapper/src/stm32/low_power.c
+    - cd ./src2/mftech-f405 && pio run && cd ../..
+    - cp ./src2/mftech-f405/.pio/build/MFTech_ALPro/firmware.elf mftech-f405-firmware.elf
+    - cp ./src2/mftech-f405/.pio/build/MFTech_ALPro/firmware.bin mftech-f405-firmware.bin
+  artifacts:
+    paths:
+      - mftech-f405-firmware.elf
+      - mftech-f405-firmware.bin
+    expire_in: 1 year
+  when: manual
+
+Build mf_lcd:
+  extends: .prepare_machine
+  script:
+    - mkdir ./src2/mf_lcd/boards
+    - cp ./src/mftech_alpro10_lcd.json ./src2/mf_lcd/boards
+    - python3 tools/fixplatformioini.py "./src2/mf_lcd/platformio.ini" "env:MFTech_ALPro_LCD"
+    - sed -i 's/Arduino\.h/sketch\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_LCD/PeripheralPins.c
+    - sed -i 's/pins_arduino\.h/pins_stm\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_LCD/variant.cpp
+    - cp -r ./src2/flasher/lib/CircularBuffer ./src2/mf_lcd/lib/
+    - cd ./src2/mf_lcd && pio run && cd ../..
+    - cp ./src2/mf_lcd/.pio/build/MFTech_ALPro_LCD/firmware.elf mf_lcd-firmware.elf
+    - cp ./src2/mf_lcd/.pio/build/MFTech_ALPro_LCD/firmware.bin mf_lcd-firmware.bin
+  artifacts:
+    paths:
+      - mf_lcd-firmware.elf
+      - mf_lcd-firmware.bin
+    expire_in: 1 year
+  when: manual
+
+Build button:
+  extends: .prepare_machine
+  script:
+    - mkdir ./src2/button/boards
+    - cp ./src/test_f051.json ./src2/button/boards
+    - python3 tools/fixplatformioini.py "./src2/button/platformio.ini" "env"
+    - sed -i 's/Arduino\.h/sketch\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/PeripheralPins.c
+    - sed -i 's/pins_arduino\.h/pins_stm\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/variant.cpp
+    - cd ./src2/button && pio run && cd ../..
+    - cp ./src2/button/.pio/build/ALPRO_button/firmware.elf button-firmware.elf
+    - cp ./src2/button/.pio/build/ALPRO_button/firmware.bin button-firmware.bin
+  artifacts:
+    paths:
+      - button-firmware.elf
+      - button-firmware.bin
+    expire_in: 1 year
+  when: manual
+
+Build bootloader:
+  extends: .prepare_machine
+  script:
+    - mkdir ./src2/bootloader/boards
+    - cp ./src/mftech_alpro10.json ./src2/bootloader/boards
+    - python3 tools/fixplatformioini.py "./src2/bootloader/platformio.ini" "env:mfBoot"
+    - sed -i 's/Arduino\.h/sketch\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/PeripheralPins.c
+    - sed -i 's/pins_arduino\.h/pins_stm\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_ALPRO/variant.cpp
+    - cp -r ./src2/flasher/lib/CircularBuffer ./src2/bootloader/lib/
+    - cp -r ./src/mfproto/lib/Crypto ./src2/bootloader/lib/
+    - cd ./src2/bootloader && pio run && cd ../..
+    - cp ./src2/bootloader/.pio/build/mfBoot/firmware.elf bootloader-firmware.elf
+    - cp ./src2/bootloader/.pio/build/mfBoot/firmware.bin bootloader-firmware.bin
+  artifacts:
+    paths:
+      - bootloader-firmware.elf
+      - bootloader-firmware.bin
+    expire_in: 1 year
+  when: manual
+
+Build bootloader_f051:
+  extends: .prepare_machine
+  script:
+    - mkdir ./src2/bootloader_f051/boards
+    - cp ./src/test_f051.json ./src2/bootloader_f051/boards
+    - python3 tools/fixplatformioini.py "./src2/bootloader_f051/platformio.ini" "env"
+    - sed -i 's/Arduino\.h/sketch\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/PeripheralPins.c
+    - sed -i 's/pins_arduino\.h/pins_stm\.h/g' ~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/variant.cpp
+    - cp -r ./src2/flasher/lib/CircularBuffer ./src2/bootloader_f051/lib/
+    - cp -r ./src/mfproto/lib/Crypto ./src2/bootloader_f051/lib/
+    - cd ./src2/bootloader_f051 && pio run && cd ../..
+    - cp ./src2/bootloader_f051/.pio/build/button_boot_rev1/firmware.elf bootloader_f051_rev1-firmware.elf
+    - cp ./src2/bootloader_f051/.pio/build/button_boot_rev1/firmware.bin bootloader_f051_rev1-firmware.bin
+    - cp ./src2/bootloader_f051/.pio/build/button_boot_rev2/firmware.elf bootloader_f051_rev2-firmware.elf
+    - cp ./src2/bootloader_f051/.pio/build/button_boot_rev2/firmware.bin bootloader_f051_rev2-firmware.bin
+  artifacts:
+    paths:
+      - bootloader_f051_rev1-firmware.elf
+      - bootloader_f051_rev1-firmware.bin
+      - bootloader_f051_rev2-firmware.elf
+      - bootloader_f051_rev2-firmware.bin
+    expire_in: 1 year
+  when: manual
+
+Build flasher:
+  extends: .prepare_machine
+  script:
+    - cp -r ./src/mfproto/lib/Crypto ./src2/flasher/lib/
+    - cd ./src2/flasher && pio run || true
+    - cd ../.. 
+    - cp ./src2/flasher/.pio/build/linux_flash/program flasher-linux_flash
+    - cp ./src2/flasher/.pio/build/linux_flashenc/program flasher-linux_flashenc
+    - cp ./src2/flasher/.pio/build/linux_terminal/program flasher-linux_terminal
+  artifacts:
+    paths:
+      - flasher-linux_flash
+      - flasher-linux_flashenc
+      - flasher-linux_terminal
+    expire_in: 1 year
+  when: manual

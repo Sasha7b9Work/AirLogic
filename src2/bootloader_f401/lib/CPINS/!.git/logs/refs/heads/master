@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 80bc861a7e4119bf7cbd852c748c4ed6c4aba9f7 sta-s2z <stas2z@gmail.com> 1571644439 +0300	commit (initial): initial commit
+80bc861a7e4119bf7cbd852c748c4ed6c4aba9f7 2afe25be34c8e10f866ad1a3b4f5836cfbcfa89e Alexey Golyshin <stas2z@gmail.com> 1581532071 +0300	pull: Fast-forward
+2afe25be34c8e10f866ad1a3b4f5836cfbcfa89e 47b1ef495acc5768588c31caa25b99cfdf8b9b7c Alexey Golyshin <stas2z@gmail.com> 1581532678 +0300	commit: Add support for open drain outputs (CPIN_OD mode)
+47b1ef495acc5768588c31caa25b99cfdf8b9b7c 2336fe57e65a8cd01813d43cb159c145df368dfb Alexey Golyshin <stas2z@gmail.com> 1581583129 +0300	commit: hardware pwm fix and add sense of active low/active high outputs
+2336fe57e65a8cd01813d43cb159c145df368dfb c13e53b0514519186865b76c507441324a5e37bd Alexey Golyshin <stas2z@gmail.com> 1581882490 +0300	commit: Finally make hardware pwm works fine
+c13e53b0514519186865b76c507441324a5e37bd e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 Alexey Golyshin <stas2z@gmail.com> 1582034808 +0300	commit: Optimized algo a bit, allow process duty of active pins only
+e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 b166c4b012863c9446ff92d2b14f586a36ff86ea Alexey Golyshin <stas2z@gmail.com> 1582052863 +0300	commit: Bugfix
+b166c4b012863c9446ff92d2b14f586a36ff86ea e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 Alexey Golyshin <stas2z@gmail.com> 1582052997 +0300	reset: moving to e91c5eafe
+e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 1e70fd38c5f734594abb2d0d3ee2c88e406057da Alexey Golyshin <stas2z@gmail.com> 1582053046 +0300	commit: Fix miscopypaste of localPins realloc
+1e70fd38c5f734594abb2d0d3ee2c88e406057da e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 Alexey Golyshin <stas2z@gmail.com> 1582053139 +0300	reset: moving to e91c5eafe
+e91c5eafe6fb75b23fccf7a9ac555dbc905542c1 4d95457b040759acdd0a4ae22529a7bb9e6b7c81 Alexey Golyshin <stas2z@gmail.com> 1582053145 +0300	commit: Fix miscopypaste of localList realloc
+4d95457b040759acdd0a4ae22529a7bb9e6b7c81 a0fd95ec96cf1b4087cd47e5ee6811cc144df97c Alexey Golyshin <stas2z@gmail.com> 1613161413 +0300	commit: heavy update, mostly modified allocation and deallocation for dynamic use, add some callbacks, added arduino independed pins init through LL etc
+a0fd95ec96cf1b4087cd47e5ee6811cc144df97c 96aae437dba76a05cb230a9ac39ecb6559f3fa0b Alexey Golyshin <stas2z@gmail.com> 1613162716 +0300	commit: fix include
