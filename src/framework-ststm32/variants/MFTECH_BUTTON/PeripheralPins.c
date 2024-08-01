@@ -11,7 +11,7 @@
  *******************************************************************************
  * Automatically generated from STM32F051K6Ux.xml
  */
-#include "Arduino.h"
+#include "sketch.h"
 #include "PeripheralPins.h"
 
 /* =====

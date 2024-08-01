@@ -4,4 +4,7 @@ pio run
 cd ~/airlogic/src2/mf_lcd
 pio run
 
+cd ~/airlogic/src2/button
+pio run
+
 cd ~/airlogic

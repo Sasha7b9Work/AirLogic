@@ -1,23 +1,3 @@
-## Сборка button
-
-Все предыдущие шаги и:
-
-1. Добавляем конфигурацию для плат в проект
-    ``` bash 
-    mkdir ~/airlogic/src2/button/boards 
-    cp ~/airlogic/src/test_f051.json ~/airlogic/src2/button/boards
-    ``` 
-2. Отредактировать файл `~/airlogic/src2/button/platformio.ini` конфигурации сборки проекта button следующим образом:
-    ``` ini
-    platform_packages =
-        toolchain-gccarmnoneeabi@1.90201.191206
-        framework-ststm32@0.0.0
-    ```
-
-3. Исправление ошибок проекта:
-    * Заменить `~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/PeripheralPins.c` заменить Arduino.h на sketch.h
-    * Заменить `~/.platformio/packages/framework-ststm32/variants/MFTECH_BUTTON/variant.cpp` заменить pins_arduino.h на pins_stm.h
-
 ## Сборка bootloader
 
 Все предыдущие шаги и:
