@@ -18,7 +18,7 @@ cp ~/airlogic/new_files/platforms/ststm32/builder/frameworks/stm32.py ~/.platfor
 cd ~/airlogic/src2/mftech-f405
 pio run
 
-cd ~/airlogic/src2/mf-lcd
+cd ~/airlogic/src2/mf_lcd
 pio run
 
 
