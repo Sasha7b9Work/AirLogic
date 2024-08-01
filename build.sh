@@ -7,4 +7,13 @@ pio run
 cd ~/airlogic/src2/button
 pio run
 
+cd ~/airlogic/src2/bootloader
+pio run
+
+cd ~/airlogic/src2/bootloader_f401
+pio run
+
+cd ~/airlogic/src2/bootloader_f051
+pio run
+
 cd ~/airlogic
