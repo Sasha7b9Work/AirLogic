@@ -458,10 +458,13 @@ MF_FIRMWARE *findFWforDevice(std::string name, std::vector<MF_FIRMWARE> &list) {
             return &list[i];
     return NULL;
 }
-int run(void) {
-    mfProtoPhyUart *UART;
+
+
+static int run()
+{
+    mfProtoPhyUart *UART = nullptr;
     mfProto *proto;
-    mfBus *bus;
+    mfBus *bus = nullptr;
     uint32_t device = 0;
     uint32_t mainDevice = 0;
     FLASH_TABLE_T *flashmap = NULL;
@@ -471,7 +474,8 @@ int run(void) {
 
     setbuf(stdout, NULL);
     serialInfo found = enumerate_ports();
-    if (!found.vid.length()) {
+    if (!found.vid.length())
+    {
         printf("\nNo proper devices found...\n");
         exit(1);
     }
@@ -589,7 +593,7 @@ int run(void) {
                 uint16_t bLen = curStep - lastStep;
                 lastStep = curStep;
                 counter++;
-                char block[1024 * 1024];
+                static char block[1024 * 1024];
                 block[bLen] = '\0';
                 memset(block, '#', bLen);
                 uint8_t ret = 0;
