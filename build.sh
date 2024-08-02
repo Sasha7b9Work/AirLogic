@@ -1,6 +1,6 @@
-cd ~/airlogic/src2/mftech-f405
+cd ~/airlogic/src2/controller
 pio run
-cp ./.pio/build/MFTech_ALPro/firmware.bin ~/airlogic/out/controller.bin
+cp ./.pio/build/controller/firmware.bin ~/airlogic/out/controller.bin
 
 cd ~/airlogic/src2/mf_lcd
 pio run
