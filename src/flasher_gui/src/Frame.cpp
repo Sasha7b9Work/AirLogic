@@ -54,32 +54,7 @@ Frame::Frame(const wxString &title)
     menuFile->Append(FILE_QUIT, _("Выход\tAlt-X"), _("Закрыть окно программы"));
     menuBar->Append(menuFile, _("Файл"));
 
-    wxMenu *menuSettings = new wxMenu();
-    wxMenu *menuSpeed = new wxMenu();
-    wxMenu *menuModeView = new wxMenu();
-
-    menuSpeed->Append(new wxMenuItem(menuSpeed, ID_SPEED_1, "1 сек", wxEmptyString, wxITEM_RADIO));
-    menuSpeed->Append(new wxMenuItem(menuSpeed, ID_SPEED_2, "2 сек", wxEmptyString, wxITEM_RADIO));
-    menuSpeed->Append(new wxMenuItem(menuSpeed, ID_SPEED_5, "5 сек", wxEmptyString, wxITEM_RADIO));
-    menuSpeed->Append(new wxMenuItem(menuSpeed, ID_SPEED_30, "30 сек", wxEmptyString, wxITEM_RADIO));
-    menuSpeed->Append(new wxMenuItem(menuSpeed, ID_SPEED_60, "60 сек", wxEmptyString, wxITEM_RADIO));
-
-    menuModeView->Append(new wxMenuItem(menuModeView, ID_MODE_VIEW_FULL, "Полный", wxEmptyString, wxITEM_RADIO));
-    menuModeView->Append(new wxMenuItem(menuModeView, ID_MODE_VIEW_TABLE, "Таблица", wxEmptyString, wxITEM_RADIO));
-    menuModeView->Append(new wxMenuItem(menuModeView, ID_MODE_VIEW_GRAPH, "График", wxEmptyString, wxITEM_RADIO));
-
-    menuSettings->AppendSubMenu(menuSpeed, _("Скорость обновления"));
-    menuSettings->AppendSubMenu(menuModeView, _("Вид"));
-
-//    wxMenu *menuTools = new wxMenu();
-//    menuTools->Append(TOOL_CONSOLE, _("Открыть консоль\tCtrl-K"), _("Открыть консоль"));
-//    menuTools->Append(TOOL_DATABASE, _("База данных\tCtrl-D"), _("База данных"));
-
     Bind(wxEVT_MENU, &Frame::OnMenuSettings, this);
-
-//    menuBar->Append(menuSettings, _("Настройки"));
-
-//    menuBar->Append(menuTools, _("Инструменты"));
 
     wxFrameBase::SetMenuBar(menuBar);
 
