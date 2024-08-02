@@ -6,6 +6,8 @@ pio run
 
 cd ~/airlogic/src2/button
 pio run
+cp ./.pio/build/ALPRO_button/firmware.bin ~/airlogic/out/button.bin
+cp ./.pio/build/ALPRO_button_v2/firmware.bin ~/airlogic/out/button_v2.bin
 
 cd ~/airlogic/src2/bootloader
 pio run
