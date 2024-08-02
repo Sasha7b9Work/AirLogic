@@ -1,3 +1,6 @@
+cd ~/airlogic/out
+rm *.bin
+
 cd ~/airlogic/src2/controller
 pio run
 cp ./.pio/build/controller/firmware.bin ~/airlogic/out/controller.bin
