@@ -1,5 +1,7 @@
 # (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 
+cmake_minimum_required(VERSION 3.5)
+
 project (flasher_gui)
 
 #set(CMAKE_UNITY_BUILD OFF)
@@ -10,6 +12,7 @@ include_directories(
     src
     lib/mfproto
     lib/serial/include
+    binarylibs/src/libusb/msvc
     ../../VS/ThirdParty/wxWidgets/include
     ../../generated/ThirdParty/lib/vc_dll/mswud
     ../../generated/ThirdParty/lib/vc_lib/mswud
@@ -77,19 +80,18 @@ if(BUILD_USE_STATIC_RUNTIME)
 endif()
 
 file(GLOB SRC       src/*.h src/*.cpp)
+file(GLOB MFPROTO   lib/mfproto/*.*)
+file(GLOB LIBUSB    binarylibs/src/libusb/libusb/core.c
+                    binarylibs/src/libusb/libusb/descriptor.c)
 
-source_group(src    FILES ${SRC})
-
-set_source_files_properties(
-    Communicator/LAN/libnet/netserver.cpp
-    Communicator/LAN/libnet/netbase.cpp
-    Communicator/LAN/libnet/netclient.cpp
-    PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
-)
-
+source_group(src     FILES ${SRC})
+source_group(mfproto FILES ${MFPROTO})
+source_group(libusb  FILES ${LIBUSB})
 
 add_executable( ${PROJECT_NAME}
     ${SRC}
+    ${MFPROTO}
+    ${LIBUSB}
 )
 
 target_link_libraries(${PROJECT_NAME}

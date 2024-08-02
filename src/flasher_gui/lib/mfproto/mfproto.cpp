@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+//#include <unistd.h>
 #endif
 
 #include "mfbus.h"
@@ -77,7 +77,7 @@ uint8_t mfProto::indexById(uint32_t id) {
 }
 void mfProto::readFirstMessage(MF_MESSAGE &mess) { readMessageIndex(mess, 0); }
 void mfProto::readLastMessage(MF_MESSAGE &mess) {
-  readMessageIndex(mess, messages.size() - 1);
+  readMessageIndex(mess, (uint8_t)(messages.size() - 1));
 }
 
 /*inline*/ void mfProto::_readMessageIndex(MF_MESSAGE &mess, uint8_t index) {
@@ -132,7 +132,7 @@ void mfProto::readMessageId(MF_MESSAGE &mess, uint32_t id) {
 
 void mfProto::deleteLastMessage(void) {
   if (getMutex(messagesMutex)) {
-    _deleteMessageIndex(messages.size() - 1);
+    _deleteMessageIndex((uint8_t)(messages.size() - 1));
     freeMutex(messagesMutex);
   }
 }
@@ -232,7 +232,7 @@ void mfProto::processBuffer(void) {
         uint16_t fullLen = headAndDataLen + sizeof(MF_FOOTER);
         if (buf.size() >= fullLen) {
           /* seems like we have a full packet here */
-          uint8_t packet[fullLen]; // temprorary packet storage
+          uint8_t packet[1024 * 1024]; // temprorary packet storage
 #ifndef USE_VECTOR_BUFFER
           /* move whole packet to temporary storage */
           for (uint16_t i = 0; i < fullLen; i++)
@@ -270,7 +270,7 @@ void mfProto::processBuffer(void) {
                 break;
               uint32_t delay = 1 + (MFPROTO_MUTEX_WAIT >> (irqSet ? 10 : 1));
               while (delay--) {
-                __asm volatile("nop");
+                  __asm { nop };
               }
             }
           }
@@ -338,7 +338,7 @@ void mfProto::sendMessage(MF_MESSAGE *msg, uint8_t *data, uint16_t size) {
 #endif
     freeMutex(sendMutex);
   }
-  msg->head.size = len;
+  msg->head.size = (uint16_t)len;
 }
 void mfProto::sendMessage(uint8_t from, uint8_t to, uint16_t type, uint32_t id,
                           uint8_t *data, uint16_t size) {
@@ -352,7 +352,7 @@ void mfProto::sendMessage(uint8_t from, uint8_t to, uint16_t type, uint32_t id,
 
 uint32_t mfProto::getSpeed(void) { return PHY.getSpeed(); }
 
-uint8_t mfProto::size(void) { return messages.size(); }
+uint8_t mfProto::size(void) { return (uint8_t)messages.size(); }
 bool mfProto::isFull(void) { return (messages.size() >= MF_QUEUE_LEN); }
 // destructor
 mfProto::~mfProto() {
@@ -379,7 +379,7 @@ bool mfProto::getMutex(atomic_bool &_mutex, uint32_t timeout) {
     if (!end)
       return false;
     end--;
-    __asm volatile("nop");
+    __asm { nop };
   }
 #endif
   return true;
