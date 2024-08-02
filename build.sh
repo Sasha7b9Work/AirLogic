@@ -9,6 +9,7 @@ pio run
 
 cd ~/airlogic/src2/bootloader
 pio run
+cp ./.pio/build/mfBoot/firmware.bin ~/airlogic/out/boot.bin
 
 cd ~/airlogic/src2/bootloader_f401
 pio run
