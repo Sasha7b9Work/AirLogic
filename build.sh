@@ -22,7 +22,7 @@ cp ./.pio/build/lcd_boot_ext/firmware.bin ~/airlogic/out/boot_lcd_ext.bin
 
 cd ~/airlogic/src2/bootloader_f051
 pio run
-cp ./.pio/build/button_boot_rev1/firmware.bin ~/airlogic/out/boot_button_v1.bin
+cp ./.pio/build/button_boot_rev1/firmware.bin ~/airlogic/out/boot_button.bin
 cp ./.pio/build/button_boot_rev2/firmware.bin ~/airlogic/out/boot_button_v2.bin
 
 cd ~/airlogic/src2/flasher
