@@ -27,7 +27,7 @@ link_directories(
 
 if(WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall -MTd -std:c++17")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE")
     
     add_compile_options(
         /wd4100
@@ -96,6 +96,7 @@ file(GLOB LIBUSB    binarylibs/src/libusb/libusb/core.c
                     binarylibs/src/libusb/libusb/hotplug.c
                     binarylibs/src/libusb/libusb/os/windows_common.c
                     binarylibs/src/libusb/libusb/os/threads_windows.c
+                    binarylibs/src/libusb/libusb/os/windows_winusb.c
                     binarylibs/src/libusb/libusb/os/windows_usbdk.c
                     binarylibs/src/libusb/libusb/os/poll_windows.c)
 
