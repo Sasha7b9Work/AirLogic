@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project (flasher_gui)
 
-#set(CMAKE_UNITY_BUILD OFF)
+set(CMAKE_UNITY_BUILD ON)
 
 #set(CMAKE_UNITY_BUILD_BATCH_SIZE 8)
 
@@ -30,11 +30,20 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE")
     
     add_compile_options(
+        /wd4018
+        /wd4061
         /wd4100
         /wd4101
+        /wd4189
+        /wd4191
         /wd4200
+        /wd4201
+        /wd4242
+        /wd4244
         /wd4265
+        /wd4296
         /wd4365    # 'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
+        /wd4456
         /wd4458
         /wd4514    # 'function' : unreferenced inline function has been removed
         /wd4623
@@ -43,6 +52,7 @@ if(WIN32)
         /wd4668
         /wd4702
         /wd4820    # 'bytes' bytes padding added after construct 'member_name'
+        /wd4826
         /wd4996    # Your code uses a function, class member, variable, or typedef that's marked deprecated
         /wd5026    # move constructor was implicitly defined as deleted
         /wd5027    # move assignment operator was implicitly defined as deleted

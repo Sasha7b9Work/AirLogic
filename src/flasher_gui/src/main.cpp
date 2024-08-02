@@ -418,7 +418,7 @@ void loadFirmwareFile(std::string sign, std::vector<MF_FIRMWARE> &list) {
     firmware.seekg(0, std::ios::beg);
     firmware.read(fw.data, firmwareSize);
     if (firmware.gcount() != firmwareSize) {
-        printf("__%lu__%u__", firmware.gcount(), firmwareSize);
+        printf("__%lu__%u__", (unsigned long)firmware.gcount(), firmwareSize);
         free(fw.data);
         return;
     }
