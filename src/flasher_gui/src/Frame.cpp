@@ -68,7 +68,7 @@ Frame::Frame(const wxString &title)
 
     sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxWindow *window = new wxWindow(this, wxID_ANY);
+    wxWindow *window = new wxWindow(this, wxID_ANY, wxDefaultPosition, { 500, 200 });
 
     new TableModules(window);
 

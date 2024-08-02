@@ -33,4 +33,6 @@ public:
 
 private:
     std::vector<TypeModule::E> lines;       // Номера строк для модулей
+
+    long GetNumLine(TypeModule::E) const;
 };

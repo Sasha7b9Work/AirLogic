@@ -20,14 +20,14 @@ wxString TypeModule::Name(E type)
 }
 
 
-TableModules::TableModules(wxWindow *parent) : wxListView(parent)
+TableModules::TableModules(wxWindow *parent) : wxListView(parent, wxID_ANY, wxDefaultPosition, { 500, 130 })
 {
     self = this;
 
     AppendColumn(_("Модуль"), wxLIST_FORMAT_LEFT);
-    AppendColumn(_("Версия"), wxLIST_FORMAT_LEFT);
-    AppendColumn(_("Файл"), wxLIST_FORMAT_LEFT);
-    AppendColumn(_("Статус"), wxLIST_FORMAT_LEFT);
+    AppendColumn(_("Версия"), wxLIST_FORMAT_LEFT, 130);
+    AppendColumn(_("Файл"), wxLIST_FORMAT_LEFT, 130);
+    AppendColumn(_("Статус"), wxLIST_FORMAT_LEFT, 130);
 }
 
 
@@ -72,6 +72,10 @@ void TableModules::AppendModule(TypeModule::E type)
             item.SetText(TypeModule::Name(type));
 
             SetItem(item);
+
+            SetVersion(type, "-");
+            SetFile(type, "-");
+            SetStatus(type, "-");
         }
     }
 }
@@ -79,26 +83,67 @@ void TableModules::AppendModule(TypeModule::E type)
 
 void TableModules::SetVersion(TypeModule::E type, const wxString &version)
 {
+    long line = GetNumLine(type);
 
+    if (line >= 0)
+    {
+        SetItem(line, 1, version);
+    }
 }
 
 
 void TableModules::SetFile(TypeModule::E type, const wxString &file)
 {
+    long line = GetNumLine(type);
 
+    if (line >= 0)
+    {
+        SetItem(line, 2, file);
+    }
 }
 
 
 void TableModules::SetStatus(TypeModule::E type, const wxString &status)
 {
+    long line = GetNumLine(type);
 
+    if (line >= 0)
+    {
+        SetItem(line, 3, status);
+    }
 }
 
 
 void TableModules::TestView()
 {
-    TableModules::self->AppendModule(TypeModule::Modem);
-    TableModules::self->AppendModule(TypeModule::Controller);
-    TableModules::self->AppendModule(TypeModule::Display);
-    TableModules::self->AppendModule(TypeModule::Keyboard);
+    AppendModule(TypeModule::Modem);
+    AppendModule(TypeModule::Controller);
+    AppendModule(TypeModule::Keyboard);
+    AppendModule(TypeModule::Display);
+
+    SetVersion(TypeModule::Controller, "alpro_v10");
+    SetVersion(TypeModule::Display, "alpro_v10_lcd");
+    SetVersion(TypeModule::Keyboard, "alpro_v10_button");
+
+    SetFile(TypeModule::Controller, "controller.bin");
+    SetFile(TypeModule::Display, "lcd.bin");
+    SetFile(TypeModule::Keyboard, "button_v2.bin");
+
+    SetStatus(TypeModule::Controller, _("Обновлено"));
+    SetStatus(TypeModule::Display, _("Обновление 11%"));
+    SetStatus(TypeModule::Keyboard, _("Можно обновить"));
+}
+
+
+long TableModules::GetNumLine(TypeModule::E type) const
+{
+    for (uint i = 0; i < lines.size(); i++)
+    {
+        if (lines[i] == type)
+        {
+            return (long)i;
+        }
+    }
+
+    return -1;
 }
