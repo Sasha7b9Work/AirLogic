@@ -1,6 +1,7 @@
 ﻿// 2022/04/29 13:56:48 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Frame.h"
+#include "TableModules.h"
 
 
 Frame *Frame::self = nullptr;
@@ -66,6 +67,14 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_SIZE, &Frame::OnSize, this);
 
     sizer = new wxBoxSizer(wxHORIZONTAL);
+
+    wxWindow *window = new wxWindow(this, wxID_ANY);
+
+    new TableModules(window);
+
+    TableModules::self->TestView();
+
+    sizer->Add(window);
 
     SetSizer(sizer);
 

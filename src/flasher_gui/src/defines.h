@@ -5,10 +5,19 @@
 
 
 #pragma warning(push, 0)
+
 #include <wx/wx.h>
+#include <wx/listctrl.h>
 //#include <wx/statline.h>
 //#include <wx/grid.h>
 //#include <wx/socket.h>
 //#include <wx/fileconf.h>
 //#include <wx/webrequest.h>
+
+#include <algorithm>
+#include <vector>
+
 #pragma warning(pop)
+
+
+typedef unsigned int uint;
