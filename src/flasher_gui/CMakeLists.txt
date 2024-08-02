@@ -13,6 +13,7 @@ include_directories(
     lib/mfproto
     lib/serial/include
     binarylibs/src/libusb/msvc
+    binarylibs/src/libusb/libusb
     ../../VS/ThirdParty/wxWidgets/include
     ../../generated/ThirdParty/lib/vc_dll/mswud
     ../../generated/ThirdParty/lib/vc_lib/mswud
@@ -29,14 +30,18 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
     
     add_compile_options(
+        /wd4100
+        /wd4101
         /wd4200
         /wd4265
         /wd4365    # 'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
+        /wd4458
         /wd4514    # 'function' : unreferenced inline function has been removed
         /wd4623
         /wd4625    # 'derived class' : copy constructor was implicitly defined as deleted because a base class copy constructor is inaccessible or deleted
         /wd4626    # 'derived class' : assignment operator was implicitly defined as deleted because a base class assignment operator is inaccessible or deleted
         /wd4668
+        /wd4702
         /wd4820    # 'bytes' bytes padding added after construct 'member_name'
         /wd4996    # Your code uses a function, class member, variable, or typedef that's marked deprecated
         /wd5026    # move constructor was implicitly defined as deleted
@@ -81,20 +86,32 @@ endif()
 
 file(GLOB SRC       src/*.h src/*.cpp)
 file(GLOB MFPROTO   lib/mfproto/*.*)
+file(GLOB SERIAL    lib/serial/src/*.*
+                    lib/serial/src/impl/win.cc
+                    lib/serial/src/impl/list_ports/list_ports_win.cc)
 file(GLOB LIBUSB    binarylibs/src/libusb/libusb/core.c
-                    binarylibs/src/libusb/libusb/descriptor.c)
+                    binarylibs/src/libusb/libusb/descriptor.c
+                    binarylibs/src/libusb/libusb/io.c
+                    binarylibs/src/libusb/libusb/sync.c
+                    binarylibs/src/libusb/libusb/hotplug.c
+                    binarylibs/src/libusb/libusb/os/windows_common.c
+                    binarylibs/src/libusb/libusb/os/threads_windows.c
+                    binarylibs/src/libusb/libusb/os/windows_usbdk.c
+                    binarylibs/src/libusb/libusb/os/poll_windows.c)
 
 source_group(src     FILES ${SRC})
 source_group(mfproto FILES ${MFPROTO})
+source_group(serial  FILES ${SERIAL})
 source_group(libusb  FILES ${LIBUSB})
 
 add_executable( ${PROJECT_NAME}
     ${SRC}
     ${MFPROTO}
+    ${SERIAL}
     ${LIBUSB}
 )
 
 target_link_libraries(${PROJECT_NAME}
     wxbase32ud wxmsw32ud_core wxbase32ud_net wxzlibd wxpngd
-    Ws2_32 Comctl32 Rpcrt4
+    Ws2_32 Comctl32 Rpcrt4 Setupapi
 )

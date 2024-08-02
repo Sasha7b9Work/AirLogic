@@ -82,7 +82,7 @@ void mfBus::begin(void) {
   beginStart();
   beginEnd();
 }
-uint8_t mfBus::getSlavesCount(void) { return slaves.size(); }
+uint8_t mfBus::getSlavesCount(void) { return (uint8_t)slaves.size(); }
 MFBUS_SLAVE_T mfBus::getSlave(uint8_t num) {
   if ((num < getSlavesCount()) && (deviceId == MFBUS_MASTER)) {
     return slaves[num];
@@ -298,7 +298,7 @@ uint8_t mfBus::defaultAnswer(mfBus *instance, MF_MESSAGE *msg,
     uint8_t *buf = NULL;
     uint32_t dbgsize = 0;
 #endif
-    instance->sendMessage(newmsg, buf, dbgsize);
+    instance->sendMessage(newmsg, buf, (uint16_t)dbgsize);
   } break;
 #ifdef SYSBL_MAGIC_NUMBER_BKP_INDEX
   /* reboot to bootloader */
@@ -329,7 +329,7 @@ uint8_t mfBus::defaultAnswer(mfBus *instance, MF_MESSAGE *msg,
   case MFBUS_GETNAME: {
     /* return mfBus instance name */
     instance->sendMessage(newmsg, (uint8_t *)instance->name,
-                          strlen(instance->name) + 1);
+                          (uint16_t)(strlen(instance->name) + 1));
   } break;
   default:
     ret = 0;
