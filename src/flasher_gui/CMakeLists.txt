@@ -14,7 +14,7 @@ include_directories(
     lib/serial/include
     binarylibs/src/libusb/msvc
     binarylibs/src/libusb/libusb
-    ../../VS/ThirdParty/wxWidgets/include
+    ../../ThirdParty/wxWidgets/include
     ../../generated/ThirdParty/lib/vc_dll/mswud
     ../../generated/ThirdParty/lib/vc_lib/mswud
 )
@@ -30,6 +30,7 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE")
     
     add_compile_options(
+        -DFLASHER
         /wd4018
         /wd4061
         /wd4100

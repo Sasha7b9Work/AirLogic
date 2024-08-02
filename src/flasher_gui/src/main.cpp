@@ -585,11 +585,11 @@ int run(void) {
             float stepSize = 50.0 / (lastErasePage - firstErasePage + 1);
 
             for (uint32_t p = firstErasePage; p <= lastErasePage; p++) {
-                curStep = counter * stepSize;
+                curStep = (uint16_t)((float)counter * stepSize);
                 uint16_t bLen = curStep - lastStep;
                 lastStep = curStep;
                 counter++;
-                char block[bLen + 1];
+                char block[1024 * 1024];
                 block[bLen] = '\0';
                 memset(block, '#', bLen);
                 uint8_t ret = 0;
