@@ -3,6 +3,7 @@ pio run
 
 cd ~/airlogic/src2/mf_lcd
 pio run
+cp ./.pio/build/MFTech_ALPro_LCD/firmware.bin ~/airlogic/out/lcd.bin
 
 cd ~/airlogic/src2/button
 pio run
