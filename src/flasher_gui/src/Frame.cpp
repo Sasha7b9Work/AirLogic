@@ -49,15 +49,7 @@ Frame::Frame(const wxString &title)
 
     SetIcon(wxICON(MAIN_ICON));
 
-    wxMenuBar *menuBar = new wxMenuBar;
-
-    wxMenu *menuFile = new wxMenu;
-    menuFile->Append(FILE_QUIT, _("Выход\tAlt-X"), _("Закрыть окно программы"));
-    menuBar->Append(menuFile, _("Файл"));
-
     Bind(wxEVT_MENU, &Frame::OnMenuSettings, this);
-
-    wxFrameBase::SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, &Frame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Frame::OnMenuTool, this, TOOL_CONSOLE);
@@ -66,20 +58,9 @@ Frame::Frame(const wxString &title)
 
     Bind(wxEVT_SIZE, &Frame::OnSize, this);
 
-    sizer = new wxBoxSizer(wxHORIZONTAL);
+    CreatePanel();
 
-    wxWindow *window = new wxWindow(this, wxID_ANY, wxDefaultPosition, { 500, 200 });
-
-    new TableModules(window);
-
-    TableModules::self->TestView();
-
-    sizer->Add(window);
-
-    SetSizer(sizer);
-
-    SetClientSize(1024, 600);
-    wxWindowBase::SetMinClientSize({ 800, 300 });
+    SetClientSize(470, 215);
 }
 
 
@@ -141,4 +122,61 @@ void Frame::OnMenuTool(wxCommandEvent &event)
 void Frame::OnCloseWindow(wxCloseEvent &event)
 {
     event.Skip();
+}
+
+
+void Frame::CreatePanel()
+{
+    wxWindow *window = new wxWindow(this, wxID_ANY, { 500, 500 });
+
+    wxBoxSizer *top = new wxBoxSizer(wxHORIZONTAL);
+    {
+        wxStaticText *txtDevice = new wxStaticText(window, wxID_ANY, _("Устройство"));
+
+        wxStaticText *txtConnect = new wxStaticText(window, wxID_ANY, _("Подключено"));
+
+        wxButton *btnConfig = new wxButton(window, wxID_ANY, _("Конфигурация"));
+
+        top->AddSpacer(50);
+        top->Add(txtDevice);
+        top->AddSpacer(50);
+        top->Add(txtConnect);
+        top->AddSpacer(100);
+        top->Add(btnConfig);
+    }
+
+    wxBoxSizer *medium = new wxBoxSizer(wxHORIZONTAL);
+    {
+        new TableModules(window);
+
+        TableModules::self->TestView();
+
+        medium->Add(TableModules::self);
+    }
+
+    wxBoxSizer *down = new wxBoxSizer(wxHORIZONTAL);
+    {
+        wxButton *btnUpdate = new wxButton(window, wxID_ANY, _("Обновить"));
+
+        down->AddSpacer(200);
+        down->Add(btnUpdate);
+    }
+
+    wxBoxSizer *window_sizer = new wxBoxSizer(wxVERTICAL);
+
+    window_sizer->AddSpacer(10);
+    window_sizer->Add(top);
+    window_sizer->AddSpacer(10);
+    window_sizer->Add(medium);
+    window_sizer->AddSpacer(10);
+    window_sizer->Add(down);
+    window_sizer->AddSpacer(10);
+
+    window->SetSizer(window_sizer);
+
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+
+    sizer->Add(window);
+
+    SetSizer(sizer);
 }

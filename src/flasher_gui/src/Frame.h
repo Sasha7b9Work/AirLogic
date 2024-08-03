@@ -18,8 +18,6 @@ private:
 
     wxToolBar *toolBar = nullptr;
 
-    wxBoxSizer *sizer = nullptr;
-
     void OnSize(wxSizeEvent &);
 
     void OnCloseWindow(wxCloseEvent &);
@@ -27,4 +25,6 @@ private:
     void OnMenuTool(wxCommandEvent &);
 
     void OnMenuSettings(wxCommandEvent &);
+
+    void CreatePanel();
 };
